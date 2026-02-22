@@ -93,14 +93,16 @@ export const AuraProvider = ({ children }: { children: ReactNode }) => {
     });
 
     // Cleanup
+    const currentAudioRefs = audioRefs.current;
     return () => {
-      Object.values(audioRefs.current).forEach((audio) => {
+      Object.values(currentAudioRefs).forEach((audio) => {
         if (audio) {
           audio.pause();
           audio.src = '';
         }
       });
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Sync Audio Volumes & Play State
@@ -133,11 +135,14 @@ export const AuraProvider = ({ children }: { children: ReactNode }) => {
 
     if (isActive && timeLeft > 0) {
       interval = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            setIsActive(false);
+            return 0;
+          }
+          return prev - 1;
+        });
       }, 1000);
-    } else if (timeLeft === 0) {
-      setIsActive(false);
-      // Optional: Play alarm sound
     }
 
     return () => {
@@ -223,6 +228,7 @@ export const AuraProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAura = () => {
   const context = useContext(AuraContext);
   if (context === undefined) {
