@@ -32,6 +32,8 @@ interface AuraContextType {
   
   // Tasks
   tasks: Task[];
+  activeTaskId: string | null;
+  setActiveTask: (id: string | null) => void;
   addTask: (text: string) => void;
   toggleTask: (id: string) => void;
   removeTask: (id: string) => void;
@@ -71,6 +73,8 @@ export const AuraProvider = ({ children }: { children: ReactNode }) => {
     { id: '5', text: 'Update Kanban', completed: false, category: 'admin' },
     { id: '6', text: 'Lunch Order', completed: false, category: 'personal' },
   ]);
+
+  const [activeTaskId, setActiveTask] = useState<string | null>(null);
 
   // Audio Refs & Initialization
   const audioRefs = useRef<{ [key in keyof AudioVolumes]?: HTMLAudioElement }>({});
@@ -206,6 +210,8 @@ export const AuraProvider = ({ children }: { children: ReactNode }) => {
         volumes,
         updateVolume,
         tasks,
+        activeTaskId,
+        setActiveTask,
         addTask,
         toggleTask,
         removeTask,

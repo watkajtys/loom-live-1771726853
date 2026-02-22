@@ -4,11 +4,11 @@ import type { AudioVolumes } from '../context/AuraContext';
 export const AmbienceMixer = () => {
   const { volumes, updateVolume } = useAura();
 
-  const tracks: { id: keyof AudioVolumes; icon: string; color: string }[] = [
-    { id: 'rain', icon: 'rainy', color: 'bg-blue-400' },
-    { id: 'cafe', icon: 'storefront', color: 'bg-orange-400' },
-    { id: 'waves', icon: 'waves', color: 'bg-pink-400' },
-    { id: 'forest', icon: 'forest', color: 'bg-green-400' },
+  const tracks: { id: keyof AudioVolumes; icon: string; colorClass: string; hoverColorClass: string }[] = [
+    { id: 'rain', icon: 'rainy', colorClass: 'bg-blue-400/50', hoverColorClass: 'group-hover:bg-blue-400/70' },
+    { id: 'cafe', icon: 'storefront', colorClass: 'bg-orange-400/50', hoverColorClass: 'group-hover:bg-orange-400/70' },
+    { id: 'waves', icon: 'waves', colorClass: 'bg-pink-400/50', hoverColorClass: 'group-hover:bg-pink-400/70' },
+    { id: 'forest', icon: 'forest', colorClass: 'bg-green-400/50', hoverColorClass: 'group-hover:bg-green-400/70' },
   ];
 
   return (
@@ -20,14 +20,13 @@ export const AmbienceMixer = () => {
         <div key={track.id} className="flex flex-col items-center gap-2 h-full justify-center group">
           <div className="relative w-8 h-16 bg-white/10 rounded-full flex justify-center overflow-hidden">
             <div 
-              className={`absolute bottom-0 w-full ${track.color}/50 group-hover:${track.color}/70 transition-all`}
+              className={`absolute bottom-0 w-full ${track.colorClass} ${track.hoverColorClass} transition-all`}
               style={{ height: `${volumes[track.id]}%` }}
             ></div>
             <input 
               className="absolute w-full h-full opacity-0 cursor-pointer z-10" 
+              style={{ writingMode: 'vertical-lr', direction: 'rtl' }}
               type="range" 
-              // @ts-ignore
-              orient="vertical"
               min="0"
               max="100"
               value={volumes[track.id]}

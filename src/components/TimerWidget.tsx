@@ -4,7 +4,7 @@ export const TimerWidget = () => {
   const { timeLeft, isActive, mode, toggleTimer, resetTimer, setMode } = useAura();
 
   const totalTime = mode === 'focus' ? 25 * 60 : 5 * 60;
-  const progress = ((totalTime - timeLeft) / totalTime) * 283; // 283 is circumference of circle with r=45
+  const progress = (timeLeft / totalTime) * 283; // 283 is circumference of circle with r=45
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);

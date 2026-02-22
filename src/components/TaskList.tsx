@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAura } from '../context/AuraContext';
 
 export const TaskList = () => {
-  const { tasks, toggleTask, addTask, reorderTasks } = useAura();
+  const { tasks, toggleTask, addTask, reorderTasks, activeTaskId, setActiveTask } = useAura();
   const [isAdding, setIsAdding] = useState(false);
   const [newTaskText, setNewTaskText] = useState('');
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
@@ -82,7 +82,12 @@ export const TaskList = () => {
               onDragStart={(e) => handleDragStart(e, index)}
               onDragOver={(e) => handleDragOver(e, index)}
               onDrop={(e) => handleDrop(e, index)}
-              className={`group flex items-center gap-3 p-3 rounded-2xl transition-all border border-transparent hover:border-white/20 ${task.completed ? 'bg-white/5 hover:bg-white/20 opacity-50' : 'bg-white/10 hover:bg-white/20'} ${draggedIndex === index ? 'opacity-20 border-dashed border-white' : ''} cursor-move`}
+              onClick={() => setActiveTask(task.id)}
+              className={`group flex items-center gap-3 p-3 rounded-2xl transition-all border cursor-move
+                ${activeTaskId === task.id ? 'border-white bg-white/20 shadow-lg scale-[1.02]' : 'border-transparent hover:border-white/20'}
+                ${task.completed ? 'bg-white/5 opacity-50' : (activeTaskId === task.id ? '' : 'bg-white/10')}
+                ${draggedIndex === index ? 'opacity-20 border-dashed border-white' : ''}
+              `}
             >
               <div 
                 onClick={(e) => { e.stopPropagation(); toggleTask(task.id); }}
