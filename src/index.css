@@ -1,104 +1,65 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
 @theme {
-  --color-brut-bg: #0a0a0f;
-  --color-brut-panel: #111116;
-  --color-brut-border: #333333;
-  --color-brut-accent: #eab308;
-  --color-brut-text: #ffffff;
-  --color-brut-text-muted: #888888;
-  --color-brut-red: #ef4444;
-  --color-brut-blue: #3b82f6;
+  --color-primary: #ff6b6b;
+  --color-secondary: #ffa502;
+  --color-accent: #ff9f43;
+  --color-background-light: #fff0f0;
+  --color-background-dark: #2d1b2e;
 
-  --font-sans: "Inter", "Helvetica", "Arial", sans-serif;
-}
+  --font-display: "Inter", sans-serif;
 
-/* Custom Utilities */
-@utility no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float 7s ease-in-out infinite 1s;
+  --animate-float-slow: float 8s ease-in-out infinite 2s;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
   }
 }
 
-@utility brut-border {
-  border: 2px solid #333;
+/* Custom Utilities */
+.glass-widget {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
 }
 
-@utility brut-border-r {
-  border-right: 2px solid #333;
+.glass-bubble {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 24px 0 rgba(31, 38, 135, 0.1);
 }
 
-@utility brut-border-b {
-  border-bottom: 2px solid #333;
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
-@utility brut-border-l {
-  border-left: 2px solid #333;
+input[type=range][orient=vertical] {
+  writing-mode: bt-lr;
+  -webkit-appearance: slider-vertical;
+  width: 8px;
+  height: 100%;
+  padding: 0 5px;
 }
 
-@utility brut-border-t {
-  border-top: 2px solid #333;
-}
-
-@utility connector-line {
-  stroke-dasharray: 8, 8;
-  stroke-width: 2px;
-}
-
-@utility drag-thread {
-  stroke-dasharray: 10, 10;
-  stroke-width: 4px;
-  animation: flow 20s linear infinite;
-}
-
-@keyframes flow {
-  from { stroke-dashoffset: 200; }
-  to { stroke-dashoffset: 0; }
-}
-
-/* Tiptap Editor Styles */
-.tiptap-editor p {
-  margin-bottom: 1em;
-  line-height: 1.4;
-  color: #d4d4d4;
-  font-weight: 400;
-  font-size: 1.1rem;
-}
-
-.tiptap-editor h2 {
-  font-weight: 800;
-  font-size: 1.75rem;
-  margin-top: 1.5em;
-  margin-bottom: 0.5em;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  border-bottom: 2px solid #333;
-  padding-bottom: 0.25em;
-}
-
-.tiptap-editor blockquote {
-  border-left: 4px solid #eab308;
-  background: #1a1a1e;
-  padding: 1rem;
-  font-style: italic;
-  color: #fff;
-  margin-bottom: 1.5em;
-  font-weight: 500;
-}
-
-/* Base Styles */
 body {
-  font-family: var(--font-sans);
-  background-color: #050508;
-  color: var(--color-brut-text);
-  @apply h-screen w-full overflow-hidden flex relative antialiased selection:bg-yellow-500 selection:text-black;
-}
-
-#root {
-  @apply h-full w-full;
+    @apply bg-background-dark text-white font-display min-h-screen relative overflow-hidden;
 }
