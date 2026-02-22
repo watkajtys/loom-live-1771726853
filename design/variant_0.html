@@ -2,272 +2,276 @@
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Chronos Canvas: Cyber HUD Variant</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<title>AuraSpace Zen Focus Variant</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        primary: "#00f0ff",secondary: "#bd00ff","background-dark": "#000000","surface-dark": "#0a0a0a",
-                        "grid-line": "#1a1a2e",
+                        "zen-teal": "#0f4c5c",
+                        "zen-indigo": "#312e81",
+                        "zen-bg-dark": "#050b14",
+                        "glass-border": "rgba(255, 255, 255, 0.03)",
                     },
                     fontFamily: {
-                        display: ["Space Grotesk", "sans-serif"],
-                        mono: ["JetBrains Mono", "monospace"],
-                        body: ["Space Grotesk", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"],
+                        "sans": ["Inter", "sans-serif"]
                     },
-                    backgroundImage: {
-                        'grid-pattern': "linear-gradient(to right, #2a2a40 1px, transparent 1px), linear-gradient(to bottom, #2a2a40 1px, transparent 1px)",
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
                     },
                     animation: {
-                        'flow': 'flow 20s linear infinite',
-                        'pulse-glow': 'pulse-glow 3s infinite',
+                        'gradient-slow': 'gradient-motion 30s ease infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
-                        flow: {
-                            '0%': { strokeDashoffset: '100' },
-                            '100%': { strokeDashoffset: '0' },
-                        },
-                        'pulse-glow': {
-                            '0%, 100%': { boxShadow: '0 0 5px #00f0ff, 0 0 10px #00f0ff' },
-                            '50%': { boxShadow: '0 0 2px #00f0ff, 0 0 5px #00f0ff' },
+                        'gradient-motion': {
+                            '0%': { backgroundPosition: '0% 50%' },
+                            '50%': { backgroundPosition: '100% 50%' },
+                            '100%': { backgroundPosition: '0% 50%' },
                         }
                     }
                 },
             },
         }
     </script>
-<style>
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
+<style>input[type=range][orient=vertical] {
+            writing-mode: bt-lr;-webkit-appearance: slider-vertical;width: 4px;
+            height: 100%;
+            padding: 0 5px;
+        }.glass-panel-zen {
+            background: rgba(15, 23, 42, 0.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }.cyber-panel {
-            background: rgba(0, 0, 0, 0.85);
-            border: 1px solid #00f0ff;
-            box-shadow: 0 0 8px rgba(0, 240, 255, 0.2), inset 0 0 20px rgba(0, 240, 255, 0.05);
-            backdrop-filter: blur(4px);
+        .glass-sidebar {
+            background: rgba(8, 12, 25, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }.mesh-gradient-zen {
+            background: radial-gradient(at 0% 0%, hsla(192, 54%, 15%, 0.4) 0, transparent 50%), 
+                        radial-gradient(at 100% 100%, hsla(246, 36%, 25%, 0.4) 0, transparent 50%),
+                        radial-gradient(at 50% 50%, hsla(200, 40%, 10%, 1) 0, transparent 100%);
+            background-size: 150% 150%;
+        }.custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
         }
-        .cyber-panel-secondary {
-            background: rgba(0, 0, 0, 0.85);
-            border: 1px solid #bd00ff;
-            box-shadow: 0 0 8px rgba(189, 0, 255, 0.2), inset 0 0 20px rgba(189, 0, 255, 0.05);
-            backdrop-filter: blur(4px);
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
         }
-        .infinite-grid {
-            background-size: 60px 60px;mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
-            -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
         }
-        .corner-accent {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-style: solid;
-            border-color: #00f0ff;
-            border-width: 0;
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }.progress-ring__circle {
+            transition: stroke-dashoffset 0.35s;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }.sidebar-container {
+            width: 60px;
+            transition: width 0.4s ease-in-out;
+            overflow: hidden;
+        }
+        .sidebar-container:hover {
+            width: 320px;
+            background: rgba(15, 23, 42, 0.4);
+        }
+        .sidebar-content {
+            opacity: 0;
+            width: 260px;
+            transition: opacity 0.3s ease-in-out 0.1s;
             pointer-events: none;
         }
-        .corner-tl { top: -1px; left: -1px; border-top-width: 2px; border-left-width: 2px; }
-        .corner-tr { top: -1px; right: -1px; border-top-width: 2px; border-right-width: 2px; }
-        .corner-bl { bottom: -1px; left: -1px; border-bottom-width: 2px; border-left-width: 2px; }
-        .corner-br { bottom: -1px; right: -1px; border-bottom-width: 2px; border-right-width: 2px; }
-        .flowing-dash {
-            stroke-dasharray: 10, 10;
-            animation: flow 1s linear infinite;
+        .sidebar-container:hover .sidebar-content {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .sidebar-icon {
+            opacity: 1;
+            transition: opacity 0.2s;
+        }
+        .sidebar-container:hover .sidebar-icon {
+            opacity: 0;
+        }@keyframes float-particle {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; }
+            50% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+        }
+        .animate-float-particle {
+            animation: float-particle 10s ease-in-out infinite;
         }
     </style>
-<style>
-        body {
-            min-height: max(884px, 100dvh);
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-dark text-slate-100 font-display h-screen w-full overflow-hidden flex flex-col relative selection:bg-primary selection:text-black">
-<div class="absolute inset-0 z-0 pointer-events-none opacity-40 infinite-grid bg-grid-pattern shadow-[inset_0_0_100px_rgba(0,0,0,1)]"></div>
-<div class="absolute inset-0 z-0 pointer-events-none bg-[radial-gradient(circle_at_50%_50%,rgba(0,240,255,0.03),transparent_70%)]"></div>
-<header class="absolute top-0 left-0 right-0 z-50 pt-12 pb-4 px-4 flex justify-between items-center bg-gradient-to-b from-black/90 to-transparent">
-<div class="flex items-center gap-0 cyber-panel rounded-none px-2 py-1 clip-path-polygon">
-<div class="flex items-center gap-2 px-2 border-r border-primary/30 h-full">
-<span class="material-symbols-outlined text-primary text-sm">terminal</span>
+</head>
+<body class="bg-zen-bg-dark text-slate-200 font-serif min-h-screen relative overflow-hidden flex flex-col selection:bg-teal-500/30">
+<div class="absolute inset-0 z-0 bg-[#050b14]">
+<div class="absolute inset-0 mesh-gradient-zen animate-gradient-slow opacity-80"></div>
+<div class="absolute top-[10%] left-[20%] w-96 h-96 rounded-full bg-teal-900/10 blur-[100px] animate-pulse-slow"></div>
+<div class="absolute bottom-[20%] right-[20%] w-[500px] h-[500px] rounded-full bg-indigo-900/10 blur-[120px] animate-pulse-slow" style="animation-delay: 2s;"></div>
 </div>
-<div class="flex items-center gap-1 px-3 font-mono text-[10px] tracking-widest uppercase">
-<span class="text-slate-500">SYS</span>
-<span class="text-primary">&gt;</span>
-<button class="text-slate-300 hover:text-primary transition-colors">ELDORIA</button>
-<span class="text-primary">&gt;</span>
-<button class="text-slate-300 hover:text-primary transition-colors">SEC_01</button>
-<span class="text-primary">&gt;</span>
-<span class="text-white font-bold drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]">WHISPERING_WOODS</span>
+<div class="relative z-10 flex flex-col h-screen max-h-screen">
+<header class="px-8 py-6 flex items-center justify-between z-20">
+<div class="flex items-center gap-4 opacity-70 hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined font-thin text-teal-200/80" style="font-size: 28px;">spa</span>
+<h1 class="text-2xl font-serif tracking-widest text-slate-200 font-light">AuraSpace</h1>
 </div>
-</div>
-<button class="cyber-panel p-2 rounded-none text-primary hover:bg-primary/10 transition-colors">
-<span class="material-symbols-outlined text-lg">settings_suggest</span>
-</button>
-</header>
-<main class="flex-1 relative w-full h-full overflow-hidden z-10 touch-none">
-<svg class="absolute inset-0 w-full h-full pointer-events-none z-0 filter drop-shadow-[0_0_3px_#00f0ff]">
-<defs>
-<linearGradient id="gradientLine" x1="0%" x2="100%" y1="0%" y2="0%">
-<stop offset="0%" style="stop-color:#00f0ff;stop-opacity:0"></stop>
-<stop offset="50%" style="stop-color:#00f0ff;stop-opacity:1"></stop>
-<stop offset="100%" style="stop-color:#bd00ff;stop-opacity:1"></stop>
-</linearGradient>
-</defs>
-<path class="flowing-dash" d="M180,300 C250,300 150,520 220,520" fill="none" stroke="#00f0ff" stroke-width="2"></path>
-<path d="M220,520 C280,520 300,450 340,400" fill="none" stroke="#bd00ff" stroke-dasharray="2,4" stroke-opacity="0.8" stroke-width="2"></path>
-<g transform="translate(180, 375)">
-<rect fill="#000" height="24" stroke="#00f0ff" stroke-width="1" width="140" x="0" y="0"></rect>
-<text fill="#00f0ff" font-family="JetBrains Mono" font-size="9" font-weight="bold" letter-spacing="1px" text-anchor="middle" x="70" y="16">DATA_LINK::CORRUPT</text>
-<rect fill="#00f0ff" height="4" width="4" x="-2" y="-2"></rect>
-<rect fill="#00f0ff" height="4" width="4" x="138" y="22"></rect>
-</g>
-</svg>
-<div class="absolute top-[220px] left-6 w-64 cyber-panel-secondary p-0 group hover:shadow-[0_0_15px_rgba(189,0,255,0.4)] transition-all duration-300">
-<div class="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-secondary"></div>
-<div class="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-secondary"></div>
-<div class="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-secondary"></div>
-<div class="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-secondary"></div>
-<div class="p-4 relative bg-black/40">
-<div class="flex items-start justify-between mb-3">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 border border-secondary bg-secondary/10 flex items-center justify-center text-secondary shadow-[0_0_10px_rgba(189,0,255,0.3)]">
-<span class="material-symbols-outlined text-lg">fort</span>
-</div>
-<div>
-<h3 class="text-white font-mono font-bold text-sm tracking-wider uppercase leading-tight text-shadow-[0_0_5px_rgba(255,255,255,0.5)]">Obsidian_Spire</h3>
-<p class="text-[10px] text-secondary font-mono mt-0.5">LOC::MAGIC_FOCUS</p>
-</div>
-</div>
-<button class="text-secondary/50 hover:text-secondary"><span class="material-symbols-outlined text-lg">drag_handle</span></button>
-</div>
-<div class="h-24 w-full border border-secondary/30 mb-3 overflow-hidden relative group-hover:border-secondary transition-colors">
-<img alt="Dark gothic spire silhouette against a purple night sky" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity grayscale hover:grayscale-0" data-alt="Dark gothic spire silhouette against a purple night sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAByVTR-yxgCClyixotMUZlPor2O-lqoFPHuXmgVjWa4bFIy_XOXtFuDFgEpSxw9jT2LbYlAUdQ6_jrnu2IC7WYOEozccyXXobBTeyyixE_B9_SnkRIGd1IXmMVOVLZhrGxZMDqisvQxGzBcYenfCND1earVxqjOC5rYdJ96dVnhzBlMHchYwLidtYINofq5wxl9RBCCETqyug6U5ioV2hLz-xhcfr1b-_6WXJvMU-9P5k20l5aAECVQpD1NoTgoSqzCsTve9ON1cA"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-<div class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%] pointer-events-none"></div>
-</div>
-<div class="flex gap-2 text-[9px] font-mono uppercase tracking-widest">
-<span class="px-2 py-1 bg-secondary/20 text-secondary border border-secondary/50">Ancient</span>
-<span class="px-2 py-1 bg-red-900/40 text-red-500 border border-red-500/50">Danger_Lvl:High</span>
-</div>
-</div>
-</div>
-<div class="absolute top-[480px] left-1/2 -translate-x-1/2 w-72 cyber-panel p-0 group transition-all z-20 hover:scale-[1.02]">
-<div class="corner-accent corner-tl"></div>
-<div class="corner-accent corner-tr"></div>
-<div class="corner-accent corner-bl"></div>
-<div class="corner-accent corner-br"></div>
-<div class="absolute -top-3 -right-3 w-6 h-6 bg-black border border-primary text-primary flex items-center justify-center text-[10px] font-mono font-bold shadow-[0_0_10px_#00f0ff] z-10">02</div>
-<div class="p-5 bg-black/60 relative overflow-hidden">
-<div class="absolute top-0 left-0 w-full h-[1px] bg-primary/50 shadow-[0_0_10px_#00f0ff] animate-[scan_3s_ease-in-out_infinite]"></div>
-<div class="flex items-start justify-between mb-3">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 border border-primary bg-primary/10 flex items-center justify-center text-primary shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-<span class="material-symbols-outlined text-xl">token</span>
-</div>
-<div>
-<h3 class="text-white font-mono font-bold text-base tracking-widest uppercase leading-tight drop-shadow-md">Whispering<br/>Woods</h3>
-<p class="text-[10px] text-primary font-mono mt-1">TERRITORY::FAE</p>
-</div>
-</div>
-<button class="text-primary/50 hover:text-primary"><span class="material-symbols-outlined">drag_handle</span></button>
-</div>
-<p class="text-xs font-mono text-slate-300 mb-4 leading-relaxed border-l-2 border-primary/30 pl-3">
-                &gt; ALERT: Reality shift detected.<br/>
-                &gt; Flora exhibits quantum instability when unobserved.
-            </p>
-<div class="flex items-center justify-between mt-2 pt-3 border-t border-primary/20">
-<div class="flex -space-x-3">
-<div class="w-6 h-6 border border-primary bg-black flex items-center justify-center text-[8px] text-primary font-mono">A</div>
-<div class="w-6 h-6 border border-primary bg-black flex items-center justify-center text-[8px] text-primary font-mono">B</div>
-<div class="w-6 h-6 border border-primary bg-primary/20 flex items-center justify-center text-[8px] text-primary font-mono">+3</div>
-</div>
-<button class="text-primary text-[10px] font-mono font-bold uppercase tracking-widest hover:bg-primary hover:text-black px-2 py-1 transition-colors border border-transparent hover:border-primary">
-                    [ EXPAND_DATA ]
-                </button>
-</div>
-</div>
-</div>
-<div class="absolute top-[350px] left-[320px] w-48 border border-slate-700 bg-black/80 p-3 opacity-60 hover:opacity-100 transition-opacity scale-90">
-<div class="flex items-center gap-2 mb-2">
-<div class="w-6 h-6 border border-slate-600 flex items-center justify-center">
-<span class="material-symbols-outlined text-xs text-slate-400">water</span>
-</div>
-<h4 class="text-slate-400 font-mono font-bold text-xs uppercase tracking-wider">Sunken_Grotto</h4>
-</div>
-<div class="h-1 w-full bg-slate-900 overflow-hidden border border-slate-800">
-<div class="h-full bg-slate-500 w-1/3"></div>
-</div>
-<p class="text-[9px] font-mono text-slate-600 mt-1 uppercase">Loading_Assets...</p>
-</div>
-</main>
-<div class="absolute bottom-28 right-4 flex flex-col gap-3 z-20">
-<div class="bg-black border border-primary/30 p-1 flex flex-col gap-1 shadow-[0_0_10px_rgba(0,0,0,0.8)]">
-<button class="w-8 h-8 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-colors border border-transparent hover:border-primary/50">
-<span class="material-symbols-outlined text-lg">add</span>
-</button>
-<div class="h-[1px] w-full bg-primary/20"></div>
-<button class="w-8 h-8 flex items-center justify-center text-primary hover:bg-primary hover:text-black transition-colors border border-transparent hover:border-primary/50">
-<span class="material-symbols-outlined text-lg">remove</span>
-</button>
-</div>
-<button class="w-10 h-10 bg-black border border-primary text-primary hover:bg-primary hover:text-black transition-all shadow-[0_0_15px_rgba(0,240,255,0.2)] flex items-center justify-center group">
-<span class="material-symbols-outlined text-lg group-hover:scale-110 transition-transform">center_focus_weak</span>
-</button>
-</div>
-<div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-30">
-<button class="group relative flex items-center justify-center h-14 pl-6 pr-8 bg-black border-2 border-primary shadow-[0_0_20px_rgba(0,240,255,0.4)] hover:shadow-[0_0_30px_rgba(0,240,255,0.7)] transition-all active:scale-95 text-primary overflow-hidden clip-path-polygon">
-<div class="absolute inset-0 bg-primary/10 translate-y-[100%] group-hover:translate-y-0 transition-transform duration-300"></div>
-<span class="material-symbols-outlined mr-3 text-2xl group-hover:rotate-90 transition-transform duration-500">add_circle</span>
-<div class="flex flex-col items-start">
-<span class="font-mono font-bold tracking-widest text-sm">CREATE_NODE</span>
-<span class="text-[9px] font-mono opacity-60">INIT_SEQUENCE</span>
-</div>
-<div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-primary"></div>
-<div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-primary"></div>
-</button>
-</div>
-<nav class="absolute bottom-0 w-full z-40 pointer-events-none">
-<div class="w-full flex justify-center pointer-events-auto">
-<div class="flex gap-8 border-t border-l border-r border-primary/50 bg-black/90 px-8 pb-8 pt-4 clip-path-polygon backdrop-blur-md shadow-[0_-5px_20px_rgba(0,0,0,0.8)] rounded-t-lg relative">
-<div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent shadow-[0_0_10px_#00f0ff]"></div>
-<a class="flex flex-col items-center justify-end gap-1 text-primary group" href="#">
-<div class="relative">
-<span class="material-symbols-outlined text-[24px] group-hover:text-white transition-colors z-10 relative">grid_view</span>
-<div class="absolute inset-0 bg-primary blur-md opacity-40 group-hover:opacity-80 transition-opacity"></div>
-</div>
-<span class="text-[9px] font-mono font-bold tracking-widest uppercase mt-1">Canvas</span>
-</a>
-<a class="flex flex-col items-center justify-end gap-1 text-slate-500 hover:text-primary transition-colors group" href="#">
-<span class="material-symbols-outlined text-[24px]">account_tree</span>
-<span class="text-[9px] font-mono font-bold tracking-widest uppercase mt-1">Timeline</span>
-</a>
-<a class="flex flex-col items-center justify-end gap-1 text-slate-500 hover:text-primary transition-colors group" href="#">
-<span class="material-symbols-outlined text-[24px]">group</span>
-<span class="text-[9px] font-mono font-bold tracking-widest uppercase mt-1">Entities</span>
-</a>
-<a class="flex flex-col items-center justify-end gap-1 text-slate-500 hover:text-primary transition-colors group" href="#">
-<span class="material-symbols-outlined text-[24px]">settings_system_daydream</span>
-<span class="text-[9px] font-mono font-bold tracking-widest uppercase mt-1">Config</span>
-</a>
-</div>
-</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm tracking-widest uppercase text-teal-100/90 border-b border-teal-500/50 pb-1" href="#">Focus</a>
+<a class="text-sm tracking-widest uppercase text-slate-400 hover:text-teal-100 transition-colors" href="#">Stats</a>
+<a class="text-sm tracking-widest uppercase text-slate-400 hover:text-teal-100 transition-colors" href="#">Settings</a>
 </nav>
-<div class="absolute top-20 right-4 z-20">
-<button class="w-10 h-10 bg-black border border-primary/40 rounded-none flex items-center justify-center text-primary/70 hover:text-primary hover:border-primary hover:shadow-[0_0_10px_rgba(0,240,255,0.3)] transition-all">
-<span class="material-symbols-outlined text-xl">search</span>
+<div class="flex items-center gap-6">
+<button class="text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined font-light">notifications</span>
 </button>
+<div class="w-8 h-8 rounded-full border border-teal-500/20 flex items-center justify-center text-xs text-teal-200/80 font-serif italic">
+                    JD
+                </div>
+</div>
+</header>
+<main class="flex-1 flex w-full h-full relative overflow-hidden">
+<aside class="sidebar-container glass-sidebar h-[80vh] my-auto ml-6 rounded-2xl flex flex-col z-30 absolute left-0 top-0 bottom-0 shadow-2xl">
+<div class="sidebar-icon absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center gap-8">
+<div class="h-full w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent"></div>
+<span class="material-symbols-outlined text-slate-300 animate-pulse" style="font-size: 24px;">equalizer</span>
+<span class="text-[10px] uppercase tracking-[0.2em] -rotate-90 text-slate-400 whitespace-nowrap">Ambience</span>
+<div class="h-full w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent"></div>
+</div>
+<div class="sidebar-content flex flex-col h-full p-6 ml-10"> 
+<div class="flex items-center justify-between mb-8 border-b border-white/5 pb-4">
+<h2 class="text-xl font-serif italic text-teal-100">Soundscape</h2>
+<button class="text-[10px] text-slate-500 hover:text-white transition-colors uppercase tracking-widest">Mute</button>
+</div>
+<div class="flex-1 space-y-8 pr-2 custom-scrollbar overflow-y-auto">
+<div class="space-y-3 group">
+<div class="flex justify-between items-end">
+<span class="text-sm font-light text-slate-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-teal-400/70 text-lg">rainy</span> Rain
+                                </span>
+<span class="text-xs text-slate-500 font-mono">40%</span>
+</div>
+<input class="w-full h-1 bg-slate-700/30 rounded-lg appearance-none cursor-pointer accent-teal-500 hover:accent-teal-400" max="100" min="0" type="range" value="40"/>
+</div>
+<div class="space-y-3 group">
+<div class="flex justify-between items-end">
+<span class="text-sm font-light text-slate-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-indigo-400/70 text-lg">storefront</span> Cafe
+                                </span>
+<span class="text-xs text-slate-500 font-mono">25%</span>
+</div>
+<input class="w-full h-1 bg-slate-700/30 rounded-lg appearance-none cursor-pointer accent-teal-500 hover:accent-teal-400" max="100" min="0" type="range" value="25"/>
+</div>
+<div class="space-y-3 group">
+<div class="flex justify-between items-end">
+<span class="text-sm font-light text-slate-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-green-400/70 text-lg">forest</span> Forest
+                                </span>
+<span class="text-xs text-slate-500 font-mono">10%</span>
+</div>
+<input class="w-full h-1 bg-slate-700/30 rounded-lg appearance-none cursor-pointer accent-teal-500 hover:accent-teal-400" max="100" min="0" type="range" value="10"/>
+</div>
+<div class="space-y-3 group">
+<div class="flex justify-between items-end">
+<span class="text-sm font-light text-slate-300 flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400/70 text-lg">air</span> Wind
+                                </span>
+<span class="text-xs text-slate-500 font-mono">65%</span>
+</div>
+<input class="w-full h-1 bg-slate-700/30 rounded-lg appearance-none cursor-pointer accent-teal-500 hover:accent-teal-400" max="100" min="0" type="range" value="65"/>
+</div>
+</div>
+</div>
+</aside>
+<section class="flex-1 flex flex-col items-center justify-center relative z-10 px-20">
+<div class="relative flex flex-col items-center justify-center group">
+<div class="absolute inset-0 bg-teal-500/5 blur-[100px] rounded-full scale-150 animate-pulse-slow"></div>
+<div class="relative w-[500px] h-[500px] flex items-center justify-center">
+<svg class="absolute inset-0 w-full h-full transform -rotate-90 drop-shadow-[0_0_15px_rgba(45,212,191,0.2)]">
+<circle cx="250" cy="250" fill="transparent" r="240" stroke="rgba(255,255,255,0.03)" stroke-width="2"></circle>
+<circle class="progress-ring__circle" cx="250" cy="250" fill="transparent" r="240" stroke="#2dd4bf" stroke-dasharray="1507" stroke-dashoffset="300" stroke-linecap="round" stroke-width="1.5" style="filter: drop-shadow(0 0 4px #2dd4bf);"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center z-10">
+<span class="text-sm uppercase tracking-[0.3em] text-teal-200/50 mb-4 font-sans">Focus Session</span>
+<div class="text-[140px] font-serif font-thin text-white tracking-tighter leading-none tabular-nums opacity-90 text-shadow-sm">
+                                25:00
+                            </div>
+<div class="mt-8 flex items-center gap-6 opacity-40 group-hover:opacity-100 transition-all duration-700">
+<button class="p-3 rounded-full hover:bg-white/5 transition-colors text-slate-300 hover:text-white border border-transparent hover:border-white/10">
+<span class="material-symbols-outlined font-light text-2xl">restart_alt</span>
+</button>
+<button class="w-16 h-16 rounded-full bg-teal-900/30 border border-teal-500/30 hover:bg-teal-800/40 hover:border-teal-400/50 transition-all flex items-center justify-center text-teal-100 shadow-[0_0_20px_rgba(45,212,191,0.1)] hover:shadow-[0_0_30px_rgba(45,212,191,0.2)]">
+<span class="material-symbols-outlined font-light text-4xl ml-1">play_arrow</span>
+</button>
+<button class="p-3 rounded-full hover:bg-white/5 transition-colors text-slate-300 hover:text-white border border-transparent hover:border-white/10">
+<span class="material-symbols-outlined font-light text-2xl">skip_next</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-12 text-center max-w-md opacity-60">
+<p class="font-serif italic text-lg text-slate-300">"The quieter you become, the more you are able to hear."</p>
+</div>
+</section>
+<aside class="sidebar-container glass-sidebar h-[80vh] my-auto mr-6 rounded-2xl flex flex-col z-30 absolute right-0 top-0 bottom-0 shadow-2xl items-end">
+<div class="sidebar-icon absolute top-0 right-0 w-full h-full flex flex-col items-center justify-center gap-8">
+<div class="h-full w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent"></div>
+<span class="material-symbols-outlined text-slate-300 animate-pulse" style="font-size: 24px;">check_circle</span>
+<span class="text-[10px] uppercase tracking-[0.2em] rotate-90 text-slate-400 whitespace-nowrap">Priorities</span>
+<div class="h-full w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent"></div>
+</div>
+<div class="sidebar-content flex flex-col h-full p-6 w-full">
+<div class="flex items-center justify-between mb-8 border-b border-white/5 pb-4">
+<h2 class="text-xl font-serif italic text-teal-100">Tasks</h2>
+<button class="w-6 h-6 flex items-center justify-center rounded-full border border-teal-500/30 text-teal-200 hover:bg-teal-500/20 transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar space-y-4 pr-1">
+<div class="group flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 border border-transparent hover:border-white/5 transition-all cursor-pointer">
+<button class="mt-0.5 w-4 h-4 rounded-full border border-teal-500/40 hover:bg-teal-500/20 transition-colors"></button>
+<div class="flex-1">
+<p class="text-sm text-slate-200 font-light font-sans">Draft Q3 Report Section</p>
+<span class="text-[10px] text-teal-500/60 uppercase tracking-wide mt-1 block">Work</span>
+</div>
+</div>
+<div class="group flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 border border-transparent hover:border-white/5 transition-all cursor-pointer">
+<button class="mt-0.5 w-4 h-4 rounded-full border border-teal-500/40 hover:bg-teal-500/20 transition-colors"></button>
+<div class="flex-1">
+<p class="text-sm text-slate-200 font-light font-sans">Review Design System</p>
+<span class="text-[10px] text-teal-500/60 uppercase tracking-wide mt-1 block">Design</span>
+</div>
+</div>
+<div class="group flex items-start gap-3 p-3 rounded-lg hover:bg-white/5 border border-transparent hover:border-white/5 transition-all cursor-pointer">
+<button class="mt-0.5 w-4 h-4 rounded-full border border-teal-500/40 hover:bg-teal-500/20 transition-colors"></button>
+<div class="flex-1">
+<p class="text-sm text-slate-200 font-light font-sans">Meditation Break</p>
+<span class="text-[10px] text-teal-500/60 uppercase tracking-wide mt-1 block">Personal</span>
+</div>
+</div>
+<div class="group flex items-start gap-3 p-3 rounded-lg opacity-40 hover:opacity-70 transition-opacity">
+<button class="mt-0.5 w-4 h-4 rounded-full border border-teal-500 bg-teal-500/50 flex items-center justify-center">
+<span class="material-symbols-outlined text-[10px] text-white">check</span>
+</button>
+<div class="flex-1">
+<p class="text-sm text-slate-300 line-through font-light font-sans">Morning Standup</p>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</main>
 </div>
 
 </body></html>
